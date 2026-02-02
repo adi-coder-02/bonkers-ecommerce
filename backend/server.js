@@ -10,10 +10,20 @@ const orderRoutes = require('./routes/orderRoutes');
 const app = express();
 
 // Middleware
-app.use(cors({
-  origin: "https://bonkers-ecommerce-1.onrender.com",
-  credentials: true
-}));
+// Allow frontend origin(s). Can be configured via CLIENT_ORIGINS env (comma-separated).
+const allowedOrigins = process.env.CLIENT_ORIGINS
+  ? process.env.CLIENT_ORIGINS.split(',')
+  : [
+      'https://bonkers-ecommerce-1.onrender.com',
+      'https://bonkers-ecommerce.onrender.com',
+    ];
+
+app.use(
+  cors({
+    origin: allowedOrigins,
+    credentials: true,
+  })
+);
 
 app.use(express.json());
 app.use('/api/auth', authRoutes);
