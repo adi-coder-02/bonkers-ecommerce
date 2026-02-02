@@ -10,7 +10,7 @@ export const ShopProvider = ({ children }) => {
 
   const fetchProducts = async () => {
     try {
-      const res = await axios.get('https://fakestoreapi.com/products'); // change this to your API URL
+      const res = await axios.get('https://fakestoreapi.com/products'); 
       setProducts(res.data);
     } catch (error) {
       console.error('Error fetching products:', error);
