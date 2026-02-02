@@ -30,21 +30,27 @@ const Register = () => {
     }
 
     try {
-      const res = await fetch(`${VITE_API_URL}/api/auth/register`, {
+    const res = await fetch(
+      `${import.meta.env.VITE_API_URL}/api/auth/register`,
+      {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, password }),
-      });
-      const data = await res.json();
-      if (!res.ok) {
-        setError(data.message || 'Registration failed');
-      } else {
-        setSuccess('Registration successful! You can now log in.');
-        setForm({ name: '', email: '', password: '', confirmPassword: '' });
       }
-    } catch {
-      setError('Server error. Please try again later.');
+    );
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      setError(data.message || 'Registration failed');
+    } else {
+      setSuccess('Registration successful! You can now log in.');
+      setForm({ name: '', email: '', password: '', confirmPassword: '' });
     }
+  } catch (err) {
+    setError('Server error. Please try again later.');
+  }
+
   };
 
   return (
